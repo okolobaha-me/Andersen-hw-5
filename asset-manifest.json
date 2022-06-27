@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/Andersen-hw-5/static/css/main.7acaea2f.css",
+    "main.js": "/Andersen-hw-5/static/js/main.8a74f24c.js",
+    "static/media/tempPhoto.png": "/Andersen-hw-5/static/media/tempPhoto.aa6e71b5fcd231181727.png",
+    "index.html": "/Andersen-hw-5/index.html",
+    "main.7acaea2f.css.map": "/Andersen-hw-5/static/css/main.7acaea2f.css.map",
+    "main.8a74f24c.js.map": "/Andersen-hw-5/static/js/main.8a74f24c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7acaea2f.css",
+    "static/js/main.8a74f24c.js"
+  ]
+}
