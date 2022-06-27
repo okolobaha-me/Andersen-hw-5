@@ -4,21 +4,28 @@ import { CloseBtn, CloseImg, ModalBlock } from './Modal.styled';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef } from 'react';
 import close from '../../images/close.png';
+import { useDispatch } from 'react-redux';
+import { closeModal } from '../../redux/modal/modlaSlice';
+import { RegistrationForm } from '../Forms/RegistrationForm/RegistrationForm';
+import { LoginForm } from '../Forms/LoginForm/LoginForm';
 
-export const Modal = ({ content, closeModal }) => {
+export const Modal = ({ content }) => {
   const modalRoot = document.getElementById('ModalRoot');
   const stopPropagation = e => {
     e.stopPropagation();
   };
 
-  const onEscClose = useCallback(
-    e => {
-      if (e.key !== 'Escape') return;
+  const dispatch = useDispatch();
 
-      closeModal();
-    },
-    [closeModal]
-  );
+  const HandleCloseModal = () => {
+    dispatch(closeModal());
+  };
+
+  const onEscClose = useCallback(e => {
+    if (e.key !== 'Escape') return;
+
+    HandleCloseModal();
+  }, []);
 
   const isFirstLoad = useRef(true);
 
@@ -33,10 +40,10 @@ export const Modal = ({ content, closeModal }) => {
   }, [onEscClose]);
 
   return createPortal(
-    <Backdrop closeModal={closeModal}>
+    <Backdrop closeModal={HandleCloseModal}>
       <ModalBlock onClick={stopPropagation}>
-        {content}
-        <CloseBtn onClick={closeModal}>
+        {content === 'logIn' ? <LoginForm /> : <RegistrationForm />}
+        <CloseBtn onClick={HandleCloseModal}>
           <CloseImg src={close} alt={close} />
         </CloseBtn>
       </ModalBlock>
@@ -46,6 +53,5 @@ export const Modal = ({ content, closeModal }) => {
 };
 
 Modal.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  content: PropTypes.element.isRequired,
+  content: PropTypes.string.isRequired,
 };

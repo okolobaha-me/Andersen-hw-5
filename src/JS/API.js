@@ -16,7 +16,7 @@ export const tokenOptions = {
   },
 };
 
-export const register = ({ name, email, password }) => {
+export const registerUser = ({ name, email, password }) => {
   return axios
     .post('/users', {
       name,

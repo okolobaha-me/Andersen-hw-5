@@ -1,11 +1,18 @@
 import PropTypes from 'prop-types';
 import { CloseBtn, CloseImg, Message, PopupStyled } from './Popup.styled';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import close from '../../images/close.png';
+import { useDispatch } from 'react-redux';
+import { removeError } from '../../redux/requestError/requestErrorSlice';
 
-export const Popup = ({ message, closePopup }) => {
+export const Popup = ({ message }) => {
   const popupRoot = document.getElementById('PopupRoot');
+  const dispatch = useDispatch();
+
+  const closePopup = useCallback(() => {
+    dispatch(removeError());
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(closePopup, 15000);
@@ -26,6 +33,5 @@ export const Popup = ({ message, closePopup }) => {
 };
 
 Popup.propTypes = {
-  closePopup: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
 };

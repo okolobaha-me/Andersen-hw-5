@@ -16,8 +16,10 @@ import { Loader } from '../../components/Loader/Loader';
 import PropTypes from 'prop-types';
 import { Button } from '../../components/Button/Button';
 import photo from '../../images/tempPhoto.png';
+import { useSelector } from 'react-redux';
+import { getIsLoggedIn } from '../../redux/user/userSelectors';
 
-export const AboutProduct = ({ addToCart, isLoggedIn }) => {
+export const AboutProduct = ({ addToCart }) => {
   const [product, setProduct] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isPhotoLoading, setIsPhotoLoading] = useState(true);
@@ -25,6 +27,7 @@ export const AboutProduct = ({ addToCart, isLoggedIn }) => {
 
   const { productId } = useParams();
   const isFirstLoad = useRef(true);
+  const isLoggedIn = useSelector(getIsLoggedIn);
 
   useEffect(() => {
     if (!isFirstLoad) return;
@@ -97,5 +100,4 @@ export const AboutProduct = ({ addToCart, isLoggedIn }) => {
 
 AboutProduct.propTypes = {
   addToCart: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
 };

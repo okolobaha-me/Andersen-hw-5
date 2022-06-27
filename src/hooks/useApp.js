@@ -1,6 +1,8 @@
-import { useCallback, useRef, useState } from 'react';
-import { LoginForm } from '../components/Forms/LoginForm/LoginForm';
-import { RegistrationForm } from '../components/Forms/RegistrationForm/RegistrationForm';
+import { useEffect, useRef, useState } from 'react';
+import { getUserData, tokenOptions } from '../JS/API';
+import { useDispatch, useSelector } from 'react-redux';
+import { logIn } from '../redux/user/userOperations';
+import { getModalContent } from '../redux/modal/modalSelectors';
 
 export const useApp = () => {
   // cart logic
@@ -38,61 +40,27 @@ export const useApp = () => {
   //   setCart(cart);
   // };
 
-  // popup logic
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [popupContent, setPopupContent] = useState('');
+  const modalContent = useSelector(getModalContent);
 
-  const closePopup = () => {
-    setIsPopupOpen(false);
-    setPopupContent('');
-  };
+  const firstLoad = useRef(true);
 
-  // const openPopup = errMessage => {
-  //   setPopupContent(errMessage);
-  //   setIsPopupOpen(true);
-  // };
+  const dispatch = useDispatch();
 
-  // modal logic
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
+  useEffect(() => {
+    if (!firstLoad.current) return;
+    firstLoad.current = false;
 
-  const closeModal = useCallback(() => {
-    setIsModalOpen(false);
-    setModalContent(null);
+    const token = window.localStorage.getItem('token') || '';
+    if (!token) return;
+    tokenOptions.set(token);
+    getUserData().then(res => {
+      dispatch(logIn(res));
+    });
   }, []);
 
-  const openModal = async type => {
-    const modalContent =
-      type === 'logIn' ? (
-        <LoginForm onSubmit={() => {}} closeModal={closeModal} />
-      ) : (
-        <RegistrationForm onSubmit={() => {}} closeModal={closeModal} />
-      );
-    await setModalContent(modalContent);
-    setIsModalOpen(true);
-  };
-
-  // const firstLoad = useRef(true);
-
-  //  useEffect(() => {
-  //   if (!firstLoad.current) return;
-  //   firstLoad.current = false;
-  //
-  //   const token = window.localStorage.getItem('token') || '';
-  //   if (!token) return;
-  //   tokenOptions.set(token);
-  //   getUserData().then(setUserData);
-  // }, []);
-
   return {
-    openModal,
-    isModalOpen,
-    isPopupOpen,
-    modalContent,
-    closeModal,
-    closePopup,
-    popupContent,
     cart,
     addToCart,
+    modalContent,
   };
 };
