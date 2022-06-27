@@ -10,6 +10,7 @@ export const Header = styled.h2`
   line-height: 1;
   margin: 0;
   padding: 0;
+  cursor: pointer;
 `;
 
 export const DataWrapper = styled.div`
