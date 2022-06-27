@@ -1,39 +1,31 @@
-import PropTypes from 'prop-types';
 import { CartStyled, Data, DataWrapper, Header } from './Cart.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getTotalPrice,
+  getTotalQuantity,
+} from '../../redux/cart/cartSelectors';
+import { openModal } from '../../redux/modal/modlaSlice';
 
-export const Cart = ({ cart }) => {
-  const getTotalQuantity = () => {
-    let sum = 0;
-    for (const product in cart) {
-      sum += cart[product].quantity;
-    }
-    return sum;
-  };
+export const Cart = () => {
+  const totalQuantity = useSelector(state => getTotalQuantity(state));
+  const totalPrice = useSelector(state => getTotalPrice(state));
+  const dispatch = useDispatch();
 
-  const getTotalPrice = () => {
-    let sum = 0;
-    for (const product in cart) {
-      const { quantity, price } = cart[product];
-      sum += quantity * price;
-    }
-    return sum;
+  const openCart = () => {
+    dispatch(openModal('cart'));
   };
 
   return (
     <CartStyled>
-      <Header>Cart:</Header>
+      <Header onClick={openCart}>Cart:</Header>
       <DataWrapper>
         <Data>
-          Quantity: <span>{getTotalQuantity()}</span>
+          Quantity: <span>{totalQuantity}</span>
         </Data>
         <Data>
-          Total price: <span>{getTotalPrice()}</span>
+          Total price: <span>{totalPrice}</span>
         </Data>
       </DataWrapper>
     </CartStyled>
   );
-};
-
-Cart.propTypes = {
-  cart: PropTypes.object.isRequired,
 };

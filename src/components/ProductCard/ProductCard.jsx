@@ -10,18 +10,21 @@ import {
 import { Button } from '../Button/Button';
 import photo from '../../images/tempPhoto.png';
 import { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIsLoggedIn, getUserId } from '../../redux/user/userSelectors';
+import { addToCart } from '../../redux/cart/cartSlice';
 
-export const ProductCard = ({
-  id,
-  title,
-  price,
-  img,
-  isLoggedIn,
-  addToCart,
-}) => {
+export const ProductCard = ({ id, title, price, img }) => {
   const [isLoading, setIsLoading] = useState(true);
+
+  const isLoggedIn = useSelector(getIsLoggedIn);
+  const dispatch = useDispatch();
+  const userId = useSelector(getUserId);
+
   const handleAdd = () => {
-    addToCart(id, price);
+    dispatch(
+      addToCart({ productId: id, addQuantity: 1, price, name: title, userId })
+    );
   };
 
   const turnOnRealPhoto = useCallback(() => {
@@ -53,10 +56,8 @@ export const ProductCard = ({
 };
 
 ProductCard.propTypes = {
-  addToCart: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   img: PropTypes.string.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
   price: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
 };

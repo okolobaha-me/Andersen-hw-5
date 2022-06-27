@@ -1,16 +1,11 @@
 import { Outlet } from 'react-router';
 import { AppBar } from '../AppBar/AppBar';
-import PropTypes from 'prop-types';
 
-export const Layout = ({ cart }) => {
+export const Layout = () => {
   return (
     <>
-      <AppBar cart={cart} />
+      <AppBar />
       <Outlet />
     </>
   );
-};
-
-Layout.propTypes = {
-  cart: PropTypes.object.isRequired,
 };

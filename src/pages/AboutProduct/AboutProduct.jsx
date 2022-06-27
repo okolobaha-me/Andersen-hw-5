@@ -9,56 +9,25 @@ import {
   TempImage,
   Title,
 } from './AboutProduct.styled';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router';
-import { getProductDetails } from '../../JS/API';
 import { Loader } from '../../components/Loader/Loader';
-import PropTypes from 'prop-types';
 import { Button } from '../../components/Button/Button';
 import photo from '../../images/tempPhoto.png';
-import { useSelector } from 'react-redux';
-import { getIsLoggedIn } from '../../redux/user/userSelectors';
+import { useAboutProduct } from '../../hooks/useAboutProduct';
 
-export const AboutProduct = ({ addToCart }) => {
-  const [product, setProduct] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [isPhotoLoading, setIsPhotoLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
-
-  const { productId } = useParams();
-  const isFirstLoad = useRef(true);
-  const isLoggedIn = useSelector(getIsLoggedIn);
-
-  useEffect(() => {
-    if (!isFirstLoad) return;
-    isFirstLoad.current = false;
-
-    setIsLoading(true);
-
-    getProductDetails(productId)
-      .then(res => {
-        setProduct(res);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [productId]);
-
+export const AboutProduct = () => {
   const {
-    id = '',
-    title = '',
-    price = '',
-    description = '',
-    images = '',
-  } = product;
-
-  const handleAdd = () => {
-    addToCart(id, price, quantity);
-  };
-
-  const turnOnRealPhoto = useCallback(() => {
-    setIsPhotoLoading(false);
-  }, []);
+    isLoading,
+    isPhotoLoading,
+    images,
+    title,
+    turnOnRealPhoto,
+    price,
+    description,
+    isLoggedIn,
+    quantity,
+    setQuantity,
+    handleAdd,
+  } = useAboutProduct();
 
   return (
     <>
@@ -96,8 +65,4 @@ export const AboutProduct = ({ addToCart }) => {
       )}
     </>
   );
-};
-
-AboutProduct.propTypes = {
-  addToCart: PropTypes.func.isRequired,
 };

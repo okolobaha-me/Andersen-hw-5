@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { ProductCard } from '../ProductCard/ProductCard';
 import { getProducts } from '../../JS/API';
-import PropTypes from 'prop-types';
 import { Gallery } from './ProductGallery.styled';
 import { Loader } from '../Loader/Loader';
 import { useSelector } from 'react-redux';
 import { getIsLoggedIn } from '../../redux/user/userSelectors';
 
-export const ProductGallery = ({ addToCart }) => {
+export const ProductGallery = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isLoggedIn = useSelector(getIsLoggedIn);
@@ -47,7 +46,7 @@ export const ProductGallery = ({ addToCart }) => {
                     id={id}
                     title={title}
                     key={id}
-                    addToCart={addToCart}
+                    addToCart={() => {}}
                   />
                 );
               })}
@@ -57,8 +56,4 @@ export const ProductGallery = ({ addToCart }) => {
       )}
     </>
   );
-};
-
-ProductGallery.propTypes = {
-  addToCart: PropTypes.func.isRequired,
 };

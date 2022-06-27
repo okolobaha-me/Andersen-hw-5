@@ -1,11 +1,10 @@
 import { Header, Nav, NavigationLink, NavItem } from './AppBar.styled';
-import PropTypes from 'prop-types';
 import { UserMenu } from '../UserMenu/UserMenu';
 import { LogInMenu } from '../LogInMenu/LogInMenu';
 import { useSelector } from 'react-redux';
 import { getIsLoggedIn } from '../../redux/user/userSelectors';
 
-export const AppBar = ({ cart }) => {
+export const AppBar = () => {
   const isLoggedIn = useSelector(getIsLoggedIn);
 
   return (
@@ -19,11 +18,7 @@ export const AppBar = ({ cart }) => {
         </NavItem>
       </Nav>
 
-      {isLoggedIn ? <UserMenu cart={cart} /> : <LogInMenu />}
+      {isLoggedIn ? <UserMenu /> : <LogInMenu />}
     </Header>
   );
-};
-
-AppBar.propTypes = {
-  cart: PropTypes.object.isRequired,
 };

@@ -9,24 +9,21 @@ import { AboutProduct } from '../pages/AboutProduct/AboutProduct';
 import { NotFount } from '../pages/NotFound/NotFount';
 
 export const App = () => {
-  const { cart, addToCart, modalContent } = useApp();
+  const { modalContent } = useApp();
 
   return (
     <>
       <Container>
         <Routes>
-          <Route path={'/'} element={<Layout cart={cart} />}>
-            <Route index element={<Home addToCart={addToCart} />} />
+          <Route path={'/'} element={<Layout />}>
+            <Route index element={<Home />} />
             <Route path={'about-us'} element={<AboutUs />} />
-            <Route
-              path={'product/:productId'}
-              element={<AboutProduct addToCart={addToCart} />}
-            />
+            <Route path={'product/:productId'} element={<AboutProduct />} />
             <Route path={'*'} element={<NotFount />} />
           </Route>
         </Routes>
       </Container>
-      {modalContent && <Modal content={modalContent} />}
+      {modalContent && <Modal />}
     </>
   );
 };

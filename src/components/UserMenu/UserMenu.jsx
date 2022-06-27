@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Avatar, AvatarWrapper } from './UserMenu.styled';
 import { Button } from '../Button/Button';
 import { MenuWrapper } from '../BaseStyles.styled';
@@ -7,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserData } from '../../redux/user/userSelectors';
 import { logOut } from '../../redux/user/userSlice';
 
-export const UserMenu = ({ cart }) => {
+export const UserMenu = () => {
   const { name, avatar } = useSelector(getUserData);
   const dispatch = useDispatch();
 
@@ -17,12 +16,8 @@ export const UserMenu = ({ cart }) => {
       <AvatarWrapper>
         <Avatar src={avatar} alt={name} />
       </AvatarWrapper>
-      <Cart cart={cart} />
+      <Cart />
       <Button onClick={() => dispatch(logOut())} text={'Log out'} />
     </MenuWrapper>
   );
-};
-
-UserMenu.propTypes = {
-  cart: PropTypes.object.isRequired,
 };
