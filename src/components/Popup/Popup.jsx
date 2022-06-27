@@ -12,7 +12,7 @@ export const Popup = ({ message }) => {
 
   const closePopup = useCallback(() => {
     dispatch(removeError());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     const timer = setTimeout(closePopup, 15000);

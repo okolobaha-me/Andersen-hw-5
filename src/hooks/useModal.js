@@ -10,15 +10,18 @@ export const useModal = () => {
 
   const dispatch = useDispatch();
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     dispatch(closeModal());
-  };
+  }, [dispatch]);
 
-  const onEscClose = useCallback(e => {
-    if (e.key !== 'Escape') return;
+  const onEscClose = useCallback(
+    e => {
+      if (e.key !== 'Escape') return;
 
-    handleCloseModal();
-  }, []);
+      handleCloseModal();
+    },
+    [handleCloseModal]
+  );
 
   const isFirstLoad = useRef(true);
 

@@ -21,7 +21,7 @@ export const useApp = () => {
     getUserData().then(res => {
       dispatch(logIn(res));
     });
-  }, []);
+  }, [dispatch]);
 
   return {
     modalContent,
